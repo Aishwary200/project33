@@ -3,11 +3,15 @@ var Engine = Matter.Engine,
   Events = Matter.Events,
   Bodies = Matter.Bodies;
  
-var particles = [];
+var ground;
+var particles;
 var plinkos = [];
-
+var divisions=[];
 var divisionHeight=300;
 var score =0;
+var turn=0;
+var gamestate="play";
+
 function setup() {
   createCanvas(800, 800);
   engine = Engine.create();
@@ -44,8 +48,8 @@ function setup() {
        plinkos.push(new Plinko(j,375));
     }
 
+    mousePressed();
     
-
     
 }
  
@@ -54,26 +58,60 @@ function setup() {
 function draw() {
   background("black");
   textSize(20)
- //text("Score : "+score,20,30);
+  text("Score : "+score,20,30);
+  text("chance: "+turn,200,30)
+  text(500,20,550);
+  text(500,100,550);
+  text(200,180,550);
+  text(200,260,550);
+  text(200,340,550);
+  text(100,420,550);
+  text(100,500,550);
+  text(100,580,550);
+  text(500,660,550);
+  text(500,740,550);
   Engine.update(engine);
- 
-  
+    
+  ground.display();
    for (var i = 0; i < plinkos.length; i++) {
      
      plinkos[i].display();
      
    }
-   if(frameCount%60===0){
-     particles.push(new particle(random(width/2-30, width/2+30), 10,10));
-     score++;
-   }
- 
-  for (var j = 0; j < particles.length; j++) {
-   
-     particles[j].display();
-   }
    for (var k = 0; k < divisions.length; k++) {
      
      divisions[k].display();
    }
+   if(turn>=5){
+     gamestate="end"
+   }
+   if(particles!==null){
+      
+    if(particles.body.position.y>760){
+      if(particles.body.position.x<160 || particles.body.position.x>640){
+        score=score+500
+        particles=null
+      }
+      if(particles.body.position.x>160 && particles.body.position.x<400 ){
+        score=score+200
+        particles=null
+      }
+      if(particles.body.position.x>400 && particles.body.position.x<640){
+        score=score+100
+        particles=null
+      }
+    }
+  }
+   particles.display();
 }
+function mousePressed(){
+  
+if(gamestate!=="end"){
+    turn++
+   particles=new Particle(mouseX,10,10)
+   console.log(particles.body.position)
+   
+  }
+  
+}
+
