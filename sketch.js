@@ -88,17 +88,14 @@ function draw() {
     if(particles.body.position.y>760){
       if(particles.body.position.x<160 || particles.body.position.x>640){
         score=score+500
-        
         if(turn>=5 )gamestate="end"
       }
       if(particles.body.position.x>160 && particles.body.position.x<400 ){
         score=score+200
-        
         if(turn>=5 ) gamestate="end"
       }
       if(particles.body.position.x>400 && particles.body.position.x<640){
         score=score+100
-        
         if(turn>=5 ) gamestate="end"
       }
     }
