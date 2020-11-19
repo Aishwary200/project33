@@ -84,23 +84,26 @@ function draw() {
    }
    
    if(particles!==null && gamestate!=="end"){
-      
+    particles.display();   
     if(particles.body.position.y>760){
       if(particles.body.position.x<160 || particles.body.position.x>640){
         score=score+500
+        particles=null
         if(turn>=5 )gamestate="end"
       }
-      if(particles.body.position.x>160 && particles.body.position.x<400 ){
+      else if(particles.body.position.x>160 && particles.body.position.x<400 ){
         score=score+200
+        particles=null
         if(turn>=5 ) gamestate="end"
       }
-      if(particles.body.position.x>400 && particles.body.position.x<640){
+     else if(particles.body.position.x>400 && particles.body.position.x<640){
         score=score+100
+        particles=null
         if(turn>=5 ) gamestate="end"
       }
     }
   }
-   particles.display();
+   
    if(gamestate === "end"){
    textSize(100)
    text("Game over",150,300)
